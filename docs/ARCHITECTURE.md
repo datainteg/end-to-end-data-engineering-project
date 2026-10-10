@@ -1,3 +1,5 @@
+[← Project home](../README.md) · [All docs](README.md) · [Code tour](CODE_TOUR.md) · [Diagram gallery](diagrams/README.md)
+
 # Architecture: current pipeline and advanced design
 
 The project separates a verified local reference, supplied cloud integration code, and a proposed production design. The [implementation status](IMPLEMENTATION_STATUS.md) is the authority for what has actually run. These diagrams make the architecture easier to explain; they do not deploy new services.

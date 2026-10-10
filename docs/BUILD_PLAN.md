@@ -72,6 +72,6 @@ Complete the working system before recording the walkthrough. The phases are ord
 
 ## Phase 7 — Record, edit and package
 
-Follow [RECORDING_CHECKLIST.md](../tutorial/README.md). Record successful and failure demonstrations first; record the opening dashboard proof after the project works. Use the frame plan to assemble the story, replace estimated timing with measured timing, and finish the publishing checklist.
+Follow [RECORDING_CHECKLIST.md](../tutorial/RECORDING.md). Record successful and failure demonstrations first; record the opening dashboard proof after the project works. Use the frame plan to assemble the story, replace estimated timing with measured timing, and finish the publishing checklist.
 
 **Done when:** a reviewed 25–35 minute export, measured chapters, captions, selected thumbnail and verified repository links are ready. Covers VID-01–05.

@@ -1,6 +1,8 @@
+[← Tutorial hub](../README.md) · [Recording plan](../RECORDING.md) · [Project home](../../README.md)
+
 # Voiceover recording pack
 
-Nine clean English scripts are supplied, matching the planning folder's English default. Each `.txt` file contains spoken words only. Screen actions and technical warnings belong to `../README.md`, not the narration input. These scripts can be recorded by the presenter or pasted into a voice service of their choice; no voice-service account or paid generation is used here.
+Nine clean English scripts are supplied, matching the planning folder's English default. Each `.txt` file contains spoken words only. Screen actions and technical warnings belong to [the recording plan](../RECORDING.md), not the narration input. These scripts can be recorded by the presenter or pasted into a voice service of their choice; no voice-service account or paid generation is used here.
 
 | Script | Record as | Subject |
 | --- | --- | --- |

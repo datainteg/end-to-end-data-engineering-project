@@ -17,6 +17,35 @@ ET.register_namespace('', SVG)
 COLORS = {'data':'#167C80','control':'#7555BC','failure':'#C14D32','proposed':'#A66C08'}
 
 
+# Shared visual treatments keep SVG previews and editable draw.io pages aligned.
+BRAND_TINTS = {
+    'postgresql': ('#EFF6FF', '#2563EB'), 'mongodb': ('#F0FDF4', '#15803D'),
+    'python': ('#EFF6FF', '#2563EB'), 'sqlite': ('#ECFEFF', '#0E7490'),
+    'glue': ('#F5F3FF', '#7C3AED'), 's3': ('#F0FDF4', '#4D7C0F'),
+    'lambda': ('#FFF7ED', '#C2410C'), 'apachespark': ('#FFF7ED', '#C2410C'),
+    'snowflake': ('#EFF8FF', '#0284C7'), 'powerbi': ('#FFFBEB', '#A16207'),
+    'apacheairflow': ('#F5F3FF', '#7C3AED'), 'stepfunctions': ('#FDF2F8', '#BE185D'),
+    'dynamodb': ('#FAF5FF', '#9333EA'), 'secrets': ('#FFF1F2', '#BE123C'),
+    'cloudwatch': ('#FDF2F8', '#BE185D'), 'sns': ('#FDF2F8', '#BE185D'),
+}
+
+
+def theme(n):
+    return BRAND_TINTS.get(n['icon'], ('#FFFFFF', COLORS[n['color']]))
+
+
+def lanes(s):
+    if s['id'] == 'cloud-workflow':
+        return [(40, 310, 1560, 208, '01  /  EXTRACT, ARCHIVE & VALIDATE', '#EAF0FA', '#365980'),
+                (40, 560, 1560, 208, '02  /  TRANSFORM, PUBLISH & CONSUME', '#E8F4F1', '#246A61'),
+                (40, 800, 1560, 188, '03  /  SECURITY & OPERATIONS', '#F0EBF8', '#72569E')]
+    if s['id'] == 'advanced-roadmap':
+        return [(40, 340, 1560, 208, '01  /  SOURCE STATE & DISTRIBUTED PROCESSING', '#F8F0E1', '#8A6023'),
+                (40, 610, 1560, 208, '02  /  RECOVERABLE PUBLICATION & ANALYTICS', '#F1EDF9', '#72569E'),
+                (40, 880, 1560, 188, '03  /  OPERATIONAL CONTROLS & EXTENSIONS', '#E9F2F5', '#365980')]
+    return []
+
+
 def node(id, title, lines, x, y, icon=None, w=320, h=146, color='data', icon2=None):
     return dict(id=id,title=title,lines=lines,x=x,y=y,w=w,h=h,icon=icon,color=color,icon2=icon2)
 
@@ -58,7 +87,7 @@ def specs():
             node('observability','CloudWatch / diagnostics',['Job IDs + SQL query IDs + batch IDs','Account integration remains pending'],585,840,'cloudwatch',w=470,h=126,color='control'),
             node('alerts','Amazon SNS',['Foundation topic supplied','Terminal event rule is not wired'],1110,840,'sns',w=470,h=126,color='control'),
         ],edges=[edge('airflow','sfn',color='control'),edge('sfn','lock',color='control'),
-            edge('sfn','extract','bottom','top',color='control'),edge('sources','extract'),edge('extract','raw'),edge('raw','validate'),
+            edge('sfn','extract','bottom','top',[(635,302),(620,302)],color='control'),edge('sources','extract'),edge('extract','raw'),edge('raw','validate'),
             edge('validate','spark','bottom','top'),edge('spark','curated','left','right'),edge('curated','snowflake','left','right'),edge('snowflake','bi','left','right')],
         footer='Solid teal = data path. Dashed purple = control. Step Functions coordinates extract, transform and publish; it does not carry source rows.'),
     dict(id='advanced-roadmap',title='03 / Advanced production design',
@@ -152,8 +181,13 @@ def render_svg(s):
     for name,color in COLORS.items():
         m=ET.SubElement(defs,f'{{{SVG}}}marker',{'id':'arrow-'+name,'viewBox':'0 0 10 10','refX':'9','refY':'5','markerWidth':'7','markerHeight':'7','orient':'auto-start-reverse'})
         ET.SubElement(m,f'{{{SVG}}}path',{'d':'M 0 0 L 10 5 L 0 10 z','fill':color})
-    svg_text(root,60, 62,s['title'],32,'#10243A','bold')
-    svg_text(root,60,99,s['subtitle'],16,'#52657D')
+    ET.SubElement(root,f'{{{SVG}}}rect',{'width':str(s['w']),'height':'119','fill':'#10243A'})
+    ET.SubElement(root,f'{{{SVG}}}rect',{'width':'9','height':'119','fill':'#48D5D0'})
+    svg_text(root,60,62,s['title'],32,'#FFFFFF','bold')
+    svg_text(root,60,99,s['subtitle'],16,'#C3D4EA')
+    for x,y,w,h,title,bg,fg in lanes(s):
+        ET.SubElement(root,f'{{{SVG}}}rect',{'x':str(x),'y':str(y),'width':str(w),'height':str(h),'rx':'16','fill':bg})
+        svg_text(root,x+20,y+24,title,12,fg,'bold')
     lookup={n['id']:n for n in s['nodes']}
     for e in s['edges']:
         pts=[point(lookup[e['source']],e['sp']),*e['points'],point(lookup[e['target']],e['tp'])]
@@ -163,8 +197,8 @@ def render_svg(s):
         if e['label']:
             x,y=e['at'];svg_text(root,x,y,e['label'],14,COLORS[e['color']],anchor='middle')
     for n in s['nodes']:
-        color=COLORS[n['color']]
-        ET.SubElement(root,f'{{{SVG}}}rect',{'x':str(n['x']),'y':str(n['y']),'width':str(n['w']),'height':str(n['h']),'rx':'12','fill':'#FFFFFF','stroke':'#D5DFEA','stroke-width':'1.5'})
+        fill,color=theme(n)
+        ET.SubElement(root,f'{{{SVG}}}rect',{'x':str(n['x']),'y':str(n['y']),'width':str(n['w']),'height':str(n['h']),'rx':'12','fill':fill,'stroke':'#CBD8E7','stroke-width':'1.5'})
         ET.SubElement(root,f'{{{SVG}}}rect',{'x':str(n['x']),'y':str(n['y']+14),'width':'4','height':str(n['h']-28),'rx':'2','fill':color})
         if n['icon']:svg_icon(root,n['icon'],n['x']+18,n['y']+18,44,n['id'])
         if n['icon2']:svg_icon(root,n['icon2'],n['x']+68,n['y']+18,44,n['id']+'-second')
@@ -182,11 +216,17 @@ def drawio(s,parent):
         c=ET.SubElement(cells,'mxCell',{'id':id,'value':value,'style':style,'vertex':'1','parent':parent})
         ET.SubElement(c,'mxGeometry',{'x':str(x),'y':str(y),'width':str(w),'height':str(h),'as':'geometry'})
     textstyle='text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;strokeColor=none;fillColor=none;fontFamily=Arial;'
-    cell('heading',s['title'],60,27,s['w']-120,48,textstyle+'fontSize=32;fontStyle=1;fontColor=#10243A;')
-    cell('subtitle',s['subtitle'],60,78,s['w']-120,30,textstyle+'fontSize=16;fontColor=#52657D;')
+    cell('header-bg','',0,0,s['w'],119,'fillColor=#10243A;strokeColor=none;')
+    cell('header-accent','',0,0,9,119,'fillColor=#48D5D0;strokeColor=none;')
+    for i,(x,y,w,h,title,bg,fg) in enumerate(lanes(s)):
+        cell('lane-'+str(i),'',x,y,w,h,'rounded=1;arcSize=10;fillColor='+bg+';strokeColor=none;')
+        cell('lane-label-'+str(i),title,x+20,y+6,w-40,24,textstyle+'fontSize=12;fontStyle=1;fontColor='+fg+';')
+    cell('heading',s['title'],60,27,s['w']-120,48,textstyle+'fontSize=32;fontStyle=1;fontColor=#FFFFFF;')
+    cell('subtitle',s['subtitle'],60,78,s['w']-120,30,textstyle+'fontSize=16;fontColor=#C3D4EA;')
     cell('footer',s['footer'],60,s['h']-48,s['w']-120,36,textstyle+'fontSize=14;fontColor=#52657D;')
     for n in s['nodes']:
-        cell(n['id'],'',n['x'],n['y'],n['w'],n['h'],'rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor='+COLORS[n['color']]+';strokeWidth=1.5;container=1;collapsible=0;')
+        fill,border=theme(n)
+        cell(n['id'],'',n['x'],n['y'],n['w'],n['h'],'rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor='+fill+';strokeColor='+border+';strokeWidth=1.5;container=1;collapsible=0;')
         tx=128 if n['icon2'] else 78 if n['icon'] else 20
         cell(n['id']+'-title',html.escape(n['title']),tx,14,n['w']-tx-12,48,textstyle+'fontSize=20;fontStyle=1;fontColor=#10243A;',n['id'])
         cell(n['id']+'-body','<br>'.join(html.escape(t) for t in n['lines']),20,67,n['w']-35,n['h']-67,textstyle+'fontSize=16;fontColor=#334155;verticalAlign=top;',n['id'])

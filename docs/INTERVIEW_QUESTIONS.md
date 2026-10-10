@@ -1,6 +1,24 @@
+[← Project home](../README.md) · [All docs](README.md) · [Code tour](CODE_TOUR.md) · [Hands-on tutorial](../tutorial/WALKTHROUGH.md)
+
 # Project interview questions and simple answers
 
 Use these as practice answers, not a script to memorize. Start with the short answer, then open the linked code or test when asked for evidence. **The local reference and source seed are verified; the AWS/Snowflake code is an unverified integration lab.** The advanced diagram is a proposal, not deployed work.
+
+## Choose a practice topic
+
+| Foundation | Implementation | Discussion |
+| --- | --- | --- |
+| [1–6 · Project story](#explain-the-project-first) | [17–25 · Quality and metrics](#quality-and-business-calculations) | [35–40 · Operations](#orchestration-security-and-operations) |
+| [7–16 · Sources and loading](#sources-storage-and-extraction) | [26–34 · History and replay](#warehouse-history-and-safe-replay) | [41–45 · Advanced trade-offs](#advanced-follow-ups-proposals-not-completed-features) |
+
+[12 scenario questions](#scenario-questions-say-the-action-and-the-evidence) · [Ten-minute practice plan](#ten-minute-interview-practice)
+
+<details>
+<summary><strong>How to give a strong project answer</strong></summary>
+
+Use **decision → reason → evidence → limit**. Example: “I keep payment attempts separate from sales lines because retries would multiply revenue. The fixture has two attempts for O101 but one ₹300 sales line. The local tests verify the totals; cloud execution is still pending.”
+
+</details>
 
 ## Explain the project first
 

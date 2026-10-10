@@ -1,3 +1,5 @@
+[← Project home](../../README.md) · [All docs](../README.md) · [Architecture](../ARCHITECTURE.md) · [Interview guide](../INTERVIEW_QUESTIONS.md)
+
 # Architecture diagrams
 
 Open the previews below for reading, or download [ecommerce-architecture.drawio](ecommerce-architecture.drawio) for editing. It contains four pages, editable cards, labels, connectors and embedded tool logos. No external image URLs are needed to display the diagrams.
