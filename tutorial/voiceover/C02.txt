@@ -1,0 +1,11 @@
+Before choosing a service, define what one row means. In the orders table, one row represents one order. In order items, one row represents one line within an order. In payments, one row represents one payment attempt. Those are three different grains.
+
+Order O one hundred has a line with two units at five hundred rupees each, and a total line discount of one hundred rupees. That produces nine hundred rupees. The next paid order contributes three hundred rupees. A third order is cancelled, so its line contributes nothing to the sales measure.
+
+Notice that the second order has both a failed payment attempt and a successful attempt. We retain both. If we joined those attempts directly to its sales line, we could count the same sale twice. Separate facts make the intended calculation much clearer.
+
+The customer source is a document. The profile contains a city and a loyalty tier. We preserve that meaning when we flatten the fields. The customer identifier connects the profile to an order; it is not a reason to merge every customer event into the sales table.
+
+The local Docker configuration starts PostgreSQL and MongoDB on loopback ports. It is useful for seeding and inspecting the sources. It does not make those databases reachable from AWS Glue. Cloud jobs need a valid network route, security groups, credentials and encrypted connections.
+
+For the first demonstration, use the deterministic fixture and stop source writers while extracting. We are using small full snapshots. This release does not claim to implement a production incremental extractor or a shared snapshot across both databases.

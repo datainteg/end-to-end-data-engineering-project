@@ -1,0 +1,3 @@
+# Optional source tools; not required for the tested offline reference.
+psycopg[binary]==3.2.3
+pymongo==4.10.1

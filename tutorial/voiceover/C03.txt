@@ -1,0 +1,11 @@
+The cloud extraction code makes two real connector calls: a PostgreSQL JDBC read through Glue and a MongoDB read using a named Glue connection. The code is supplied for the integration lab. A successful local Python query is not evidence that the Glue JDBC connection works; that proof has to come from a cloud job.
+
+Look at the two identifiers attached to every output. The batch identifier names the logical publication. The attempt identifier names one extraction attempt. Keeping both lets us preserve earlier evidence when a new attempt is needed.
+
+Each selected dataset has an explicit file list, record count, source name and completion status. The manifest also records the upper bound and schema version. It is written only after the selected raw files are durable. A folder existing in S3 is not enough to prove that extraction completed.
+
+For this small implementation we extract complete, frozen snapshots, including unchanged customers and products. That makes the lookup side of a join available. A later incremental design must do more work: changed orders alone cannot be joined safely to changed customers alone. It needs complete lookup state and complete lines for affected orders.
+
+The teaching code also checks its upper bound. If it encounters a record updated at or after the selected boundary, it stops. It does not silently discard that record and pretend the snapshot is complete. Freeze the fixture, choose a suitable upper bound and start a new attempt.
+
+Finally, keep the raw files. An exact replay should use preserved evidence. Rescanning a live source later can produce different input, even if the batch name and time range look the same.

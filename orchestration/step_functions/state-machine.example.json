@@ -1,0 +1,138 @@
+{
+  "Comment": "Bounded snapshot teaching workflow; failed execution retains durable lock. No blind automatic retries.",
+  "StartAt": "Acquire",
+  "TimeoutSeconds": 7200,
+  "States": {
+    "Acquire": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "REPLACE_LOCK_LAMBDA_ARN",
+        "Payload": {
+          "action": "acquire",
+          "owner.$": "$$.Execution.Id"
+        }
+      },
+      "ResultPath": null,
+      "Next": "Extract"
+    },
+    "Extract": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "ecommerce-extract",
+        "Arguments": {
+          "--BUCKET": "REPLACE_PRIVATE_BUCKET",
+          "--BATCH_ID.$": "$.batch_id",
+          "--ATTEMPT_ID.$": "$.attempt_id",
+          "--UPPER_UTC.$": "$.upper_utc",
+          "--PG_CONNECTION": "ecommerce-postgresql",
+          "--MONGO_CONNECTION": "ecommerce-mongodb"
+        }
+      },
+      "ResultPath": null,
+      "TimeoutSeconds": 1800,
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.failure",
+          "Next": "FailedLockRetained"
+        }
+      ],
+      "Next": "Validate"
+    },
+    "Validate": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "REPLACE_VALIDATOR_LAMBDA_ARN",
+        "Payload.$": "$"
+      },
+      "ResultPath": null,
+      "Next": "Transform",
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.failure",
+          "Next": "FailedLockRetained"
+        }
+      ]
+    },
+    "Transform": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "ecommerce-transform",
+        "Arguments": {
+          "--BUCKET": "REPLACE_PRIVATE_BUCKET",
+          "--BATCH_ID.$": "$.batch_id",
+          "--ATTEMPT_ID.$": "$.attempt_id",
+          "--UPPER_UTC.$": "$.upper_utc"
+        }
+      },
+      "ResultPath": null,
+      "TimeoutSeconds": 1800,
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.failure",
+          "Next": "FailedLockRetained"
+        }
+      ],
+      "Next": "Publish"
+    },
+    "Publish": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "ecommerce-publish",
+        "Arguments": {
+          "--BUCKET": "REPLACE_PRIVATE_BUCKET",
+          "--BATCH_ID.$": "$.batch_id",
+          "--ATTEMPT_ID.$": "$.attempt_id",
+          "--UPPER_UTC.$": "$.upper_utc",
+          "--SNOWFLAKE_SECRET": "REPLACE_SECRET_ARN",
+          "--LOCK_TABLE": "ecommerce-lock",
+          "--OWNER.$": "$$.Execution.Id",
+          "--PUBLISH_SQL_KEY": "scripts/v0.1.0/sql/publish.sql"
+        }
+      },
+      "ResultPath": null,
+      "TimeoutSeconds": 1800,
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.failure",
+          "Next": "FailedLockRetained"
+        }
+      ],
+      "Next": "Release"
+    },
+    "Release": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "REPLACE_LOCK_LAMBDA_ARN",
+        "Payload": {
+          "action": "release",
+          "owner.$": "$$.Execution.Id"
+        }
+      },
+      "ResultPath": null,
+      "End": true
+    },
+    "FailedLockRetained": {
+      "Type": "Fail",
+      "Error": "PipelineFailedLockRetained",
+      "Cause": "Reconcile running jobs and Snowflake ledger/queries before manually releasing lock."
+    }
+  }
+}

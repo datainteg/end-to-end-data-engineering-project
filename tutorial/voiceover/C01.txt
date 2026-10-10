@@ -1,0 +1,9 @@
+An order can look correct in a source database and still produce the wrong sales number in a dashboard. A join can duplicate it. A retry can load it twice. A failed batch can leave the warehouse only partly updated. This project is about making those problems visible and testing the behavior we want.
+
+Our example is a small synthetic shop. Orders, products and payment attempts belong in PostgreSQL. Customer profiles belong in MongoDB. The business question is simple: how much did we sell, how many paid orders do we have, and how successful were the payment attempts?
+
+The baseline answer is twelve hundred rupees of demo net sales, two paid orders, an average order value of six hundred rupees, and a fifty percent payment-attempt success rate. We will check those numbers with code, not just put them on a slide.
+
+There are two routes in this repository. The offline reference runs with Python and SQLite, without installing cloud services. The cloud lab supplies Glue jobs, S3 files, Lambda validation, Snowflake SQL and orchestration code. Cloud execution requires your own accounts and connectivity checks. I will keep that distinction visible throughout this walkthrough.
+
+First we will follow one order through the data. Then we will change a customer, replay a batch, and break a selected input file. The most useful result is not only a correct total. It is understanding why that total stays correct when the process has to recover.

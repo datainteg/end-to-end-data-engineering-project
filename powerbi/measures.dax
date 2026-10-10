@@ -1,0 +1,22 @@
+Demo Net Sales = COALESCE(SUM(MART_SALES[LINE_REVENUE]), 0)
+
+Paid Orders =
+CALCULATE(
+    COUNTROWS(FACT_ORDERS),
+    FACT_ORDERS[STATUS] = "paid",
+    FACT_ORDERS[IS_DELETED] = FALSE()
+)
+
+Average Order Value = DIVIDE([Demo Net Sales], [Paid Orders], 0)
+
+All Payment Attempts =
+CALCULATE(COUNTROWS(FACT_PAYMENTS), FACT_PAYMENTS[IS_DELETED] = FALSE())
+
+Successful Payment Attempts =
+CALCULATE(
+    COUNTROWS(FACT_PAYMENTS),
+    FACT_PAYMENTS[STATUS] = "SUCCESS",
+    FACT_PAYMENTS[IS_DELETED] = FALSE()
+)
+
+All-Attempt Success Rate = DIVIDE([Successful Payment Attempts], [All Payment Attempts], 0)

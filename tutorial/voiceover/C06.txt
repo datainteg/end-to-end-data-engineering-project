@@ -1,0 +1,11 @@
+Curated files are ready for a warehouse load, but loading a file is not the same as publishing trusted business tables.
+
+In the cloud lab, Snowflake uses a storage integration and an external stage rooted at the curated S3 location. The integration uses an AWS role and an external identifier in its trust configuration. We do not embed AWS access keys in the SQL script.
+
+The loader reads the selected curated manifest and builds a bounded file list. That is the important part of the COPY command. We do not copy an open-ended prefix containing every previous batch and retry. The selected files must belong to this batch, this attempt and this dataset.
+
+Data first enters session-specific staging tables. The loader checks row counts and duplicate business keys before publication. Temporary staging prevents one session's source rows from being confused with another session's rows. It does not remove the need to serialize writers to the shared target tables.
+
+The warehouse bootstrap runs separately. Tables, views and stages already exist before the business transaction begins. This matters because data-definition statements can affect transaction boundaries. We want the publication transaction to contain the intended data changes and control updates.
+
+The provided cloud runner is synchronous and intended for the bounded teaching fixture. The original target design describes an asynchronous submit-and-poll bridge for longer SQL work. That bridge is not implemented in this release. Before presenting a successful cloud load, capture the actual COPY counts, query identifiers and reconciliation output from your own environment.

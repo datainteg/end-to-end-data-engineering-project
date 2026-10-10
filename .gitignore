@@ -1,0 +1,46 @@
+# Credentials and developer configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+credentials*
+.aws/
+.snowflake/
+# Runtime data, caches and installed packages
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.runtime/
+data/
+logs/
+*.db
+*.sqlite*
+# Infrastructure state and machine-specific configuration
+.terraform/
+*.tfstate*
+*.tfvars
+!*.example.tfvars
+config/*.local.*
+# Private planning and production working files
+/BRIEF.md
+/REQUIREMENTS.md
+/TRACKER.md
+/video/
+/recordings/
+/voiceover/
+/exports/
+/assets/
+Pasted*.txt
+.DS_Store
+.idea/
+.vscode/
+
+# Private timeline generator depends on ignored production plan
+/tools/build_chapters.py

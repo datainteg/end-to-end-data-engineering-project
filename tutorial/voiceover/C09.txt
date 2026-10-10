@@ -1,0 +1,11 @@
+The final report should make the business result easier to read, but it should not introduce a new definition of the metric.
+
+The Power BI guide uses the published sales mart and separate order and payment tables. The baseline cards should agree with SQL: twelve hundred rupees of demo net sales, two paid orders, six hundred rupees average order value, and fifty percent successful payment attempts. Label the data as synthetic and make the payment metric's scope clear.
+
+After replay, refresh and compare the totals again. After the customer change, inspect the observed customer history and the unchanged attribution of existing sales. A green workflow box is useful, but the warehouse queries and report reconciliation are stronger evidence of the result.
+
+Before finishing, stop the schedule and clean up the temporary resources. Retained buckets, object versions, source volumes, logs and network components can remain after other services are removed. Keep only the demonstration evidence you intend to retain, and review the remaining inventory.
+
+The repository contains the runnable offline reference, tests, cloud integration code and setup directions. Its status guide distinguishes what has been verified from what still requires account-level execution. Use that distinction in your own portfolio description too.
+
+Start by reproducing the baseline. Then remove one selected input file, run the batch again, and inspect the committed watermark. Once you understand that failure, try a changed customer or a soft-deleted line. The goal is to explain why the result is correct, and why recovery does not quietly change it.

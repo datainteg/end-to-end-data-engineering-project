@@ -1,0 +1,11 @@
+Customer history is where a simple upsert stops being enough. Our customer begins with a Silver loyalty tier. A later observed batch contains Gold. We want to preserve both observations.
+
+The pipeline compares the tracked attributes with the current customer version. If they changed, it closes the previous interval at the new batch boundary and inserts a new current version. The intervals are half open: the old version ends exactly where the new version begins. There should be one current version for each observed customer.
+
+Now inspect the sales fact. Its customer surrogate key stays the same. Existing facts retain the version assigned when they were first published. Therefore the segment label is the tier observed at first publication. It is not a claim about the customer's true tier at the original order time, and it does not reconstruct changes that happened between batches.
+
+The next question is what happens if publication fails after closing the old version. In the local failure test, we inject an exception inside the transaction. The customer changes roll back. So do fact changes, the ledger and watermarks. There is no partially successful batch to explain away.
+
+Replay uses the batch ledger. If the same selected content and batch have already committed, the local publisher reports already published. It does not insert another sales line or another customer version. Reusing the same batch identifier for different content is an error.
+
+A lost response is also worth thinking about. The client might miss the success message even though the database committed. That is why recovery checks the ledger before repeating business work. A timeout alone does not tell us which side of the commit boundary we reached.

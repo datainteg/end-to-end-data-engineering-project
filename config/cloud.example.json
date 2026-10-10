@@ -1,0 +1,13 @@
+{
+  "bucket": "REPLACE_PRIVATE_BUCKET",
+  "pg_connection": "ecommerce-postgresql",
+  "mongo_connection": "ecommerce-mongodb",
+  "extract_job": "ecommerce-extract",
+  "transform_job": "ecommerce-transform",
+  "publish_job": "ecommerce-publish",
+  "validate_function": "REPLACE_VALIDATOR_LAMBDA_ARN",
+  "lock_function": "REPLACE_LOCK_LAMBDA_ARN",
+  "lock_table": "ecommerce-lock",
+  "snowflake_secret": "REPLACE_SECRET_ARN",
+  "publish_sql_key": "scripts/v0.1.0/sql/publish.sql"
+}

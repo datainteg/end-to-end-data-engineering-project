@@ -1,0 +1,5 @@
+dnspython==2.9.0
+psycopg==3.2.3
+psycopg-binary==3.2.3
+pymongo==4.10.1
+typing_extensions==4.16.0

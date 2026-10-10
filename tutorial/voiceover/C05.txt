@@ -1,0 +1,13 @@
+Now we move from file integrity to row quality. Begin with required fields and stable keys. If an order has no customer identifier, the pipeline cannot safely infer which customer it belongs to. Missing required schema fields and broken references stop publication.
+
+Duplicate handling also needs a rule. Exact duplicates can collapse. A later version of the same key can supersede an earlier version. But two different payloads with the same key and timestamp are ambiguous. The code fails that case instead of choosing whichever row happened to arrive last.
+
+Money has an equally important rule. The local warehouse stores integer paise. Cloud Parquet and Snowflake use decimal columns. We avoid binary floating-point arithmetic for the sales amount. The line formula is quantity times unit price, minus the total discount for the line. It is not a discount per unit.
+
+A quantity of minus one is rejected with a reason. Quality accounting records how many rows came in, how many were accepted, how many were quarantined and how many were superseded duplicates. Those categories must add up. In the cloud lab, any quarantine blocks publication until the operator corrects the problem. The local reference also demonstrates accepting valid new rows while quarantining new invalid ones, but it refuses to hide an invalid correction behind an old published fact.
+
+The Spark portion creates explicitly typed frames, then joins order lines to orders and unique product keys. It checks that the join preserves the number of lines. Payments stay in their own fact. We never repair a multiplied sales amount merely by adding a distinct count somewhere else.
+
+Follow the arithmetic again: two times five hundred, minus one hundred, gives nine hundred. Add the second paid line of three hundred, and the result is twelve hundred rupees. The cancelled order is excluded by the published sales view.
+
+These small numbers are deliberate. You should be able to verify the entire result by hand before trusting a much larger dataset.

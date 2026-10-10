@@ -1,0 +1,13 @@
+We now have several operations to coordinate. Airflow owns the trigger and the cross-system scheduling boundary. Step Functions coordinates the AWS jobs. In a smaller project one orchestrator might be sufficient; we keep both here to demonstrate their different responsibilities.
+
+The supplied Airflow DAG starts a Standard workflow and waits for its terminal state. Starting an execution is not the same as completing a pipeline. A failed or timed-out workflow must not appear as a successful data refresh just because the start request worked.
+
+Inside the workflow, a durable mutex is acquired before extraction. Then come extraction, manifest validation, transformation and publication. The lock is released after success. A second workflow cannot acquire the same pipeline key while another owner holds it.
+
+This demonstration deliberately uses a non-expiring lock. If processing fails after acquisition, the lock remains. That requires manual recovery, but it avoids a dangerous assumption: that an expired timer proves the previous warehouse query stopped. It may still be running.
+
+For recovery, inspect the workflow, Glue jobs, warehouse queries and committed batch ledger. If publication succeeded, repair the follow-up action. If it did not succeed, confirm the old jobs and queries have stopped before releasing the lock and starting a fresh attempt. Do not run an independent publisher that bypasses this rule.
+
+Automatic job retries are disabled for the initial lab because output attempts are immutable. Repeating a write into the same selected path is not our recovery strategy. We retain evidence, identify the failed boundary and choose a new attempt explicitly.
+
+Notifications belong after terminal processing state. A failed notification must not trigger the business publication again. The notification topic is supplied in the foundation, while the account-specific event rule and subscription are separate setup steps.

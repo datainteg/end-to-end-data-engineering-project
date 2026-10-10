@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "end-to-end-data-engineering-project"
+version = "0.1.0"
+description = "Reproducible e-commerce batch pipeline reference and cloud deployment lab"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["pipeline*"]

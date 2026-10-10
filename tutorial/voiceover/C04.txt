@@ -1,0 +1,11 @@
+The files have arrived. Now we need to decide whether they belong to a complete, usable batch.
+
+The validator expects all five core datasets. Each must be marked complete. Its upper bound must agree with the batch. Every selected file must belong to the correct batch, attempt and dataset path. The local reference checks both byte length and a SHA two fifty-six checksum. The bounded cloud validator does the same for this small fixture.
+
+There is an important difference between an empty result and a missing result. A completed extraction can contain zero rows and no data files. A nonempty dataset with no files is an error. A missing dataset is also an error. We should not guess that either one means no business activity occurred.
+
+For the failure demonstration, remove one selected raw file in a separate scratch warehouse and attempt publication. The read fails before business tables are published. Inspect the ledger. On a fresh scratch run, it still contains zero committed batches.
+
+Restore the exact bytes for this local exercise, then publish again. Now the batch can complete. In an actual immutable cloud archive, preserve the failed attempt and follow the recovery guide instead of editing historical evidence.
+
+These checks answer whether the expected inputs arrived intact. They do not prove every quantity, status or foreign key is correct. That is the next layer. File validation protects the batch boundary; row validation protects the business meaning inside that boundary.
