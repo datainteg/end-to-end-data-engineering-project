@@ -16,6 +16,7 @@ Updated 10 October 2026 (Asia/Kolkata). The original architecture/build plan des
 | Orchestration | Step Functions ASL generator, Airflow start + terminal sensor | Generated and syntax checked; managed services not run |
 | Infrastructure | S3/DynamoDB/SNS CloudFormation foundation | Template supplied; network/IAM/jobs require account configuration |
 | Power BI | Model and DAX instructions | Report not built; no fabricated `.pbix` |
+| Interview / architecture | 45 Q&A, 12 scenarios, four editable draw.io pages and SVG previews with tool icons | Diagram previews and XML checked; advanced page is proposed design |
 | Teaching | Nine narration files, demonstration and recording directions | Text prepared; audio and footage not recorded |
 
 ## Deliberate differences from the original plan

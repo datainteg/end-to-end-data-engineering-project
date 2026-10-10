@@ -38,22 +38,11 @@ Amounts are synthetic INR. `customer-change` creates an observed Silver → Gold
 - Demonstrate replay, rollback, missing files, soft deletions and serialized publication.
 - Map the same ideas to Glue, S3, Snowflake, orchestration and Power BI.
 
-```mermaid
-flowchart LR
-  S[Synthetic fixture] --> R[Immutable JSONL + manifest]
-  R --> V[Validate + clean]
-  V --> W[SQLite transaction]
-  W --> M[Sales metrics + history]
-  PG[PostgreSQL JDBC] --> G[AWS Glue]
-  MG[MongoDB] --> G
-  G --> S3[S3 raw]
-  S3 --> L[Lambda validation]
-  L --> P[PySpark curated Parquet]
-  P --> SF[Snowflake COPY + publish]
-  SF --> BI[Power BI]
-```
+![Cloud integration architecture with AWS and tool logos](docs/diagrams/cloud-workflow.svg)
 
-The top path runs locally. The cloud path requires your own accounts, private source connectivity and integration validation. Airflow starts and waits for the Standard Step Functions workflow; Step Functions coordinates the cloud jobs.
+[Open all four diagrams](docs/diagrams/README.md) · [Download editable draw.io architecture](docs/diagrams/ecommerce-architecture.drawio) · [Practice 45 interview questions](docs/INTERVIEW_QUESTIONS.md)
+
+The diagram shows the supplied cloud integration code, which still needs account-level execution. Separate pages show the tested local reference, warehouse relationships, and proposed advanced design.
 
 ## Follow the guides
 
@@ -63,7 +52,9 @@ The top path runs locally. The cloud path requires your own accounts, private so
 | [Cloud setup](docs/CLOUD_SETUP.md) | Infrastructure, connections, packaging, jobs, SQL and execution |
 | [Implementation status](docs/IMPLEMENTATION_STATUS.md) | Verified behavior, design changes and unfinished integration work |
 | [Data contracts](docs/DATA_CONTRACTS.md) | Dataset grains, fixture arithmetic and history semantics |
-| [Architecture](docs/ARCHITECTURE.md) | Original target architecture and production extensions |
+| [Architecture](docs/ARCHITECTURE.md) | Current workflow, warehouse model and advanced upgrade plan |
+| [Interview questions](docs/INTERVIEW_QUESTIONS.md) | 45 short answers, 12 scenarios and a practice plan |
+| [Editable diagrams](docs/diagrams/README.md) | Four draw.io pages, SVG previews and logo credits |
 | [Operations](docs/OPERATIONS.md) | Recovery, access boundaries and teardown |
 | [Power BI guide](powerbi/README.md) | Model, measures, report layout and reconciliation |
 | [Tutorial recording guide](tutorial/README.md) | 30-minute chapter plan and exact recording steps |
@@ -85,6 +76,7 @@ scripts/           source seeding, packaging, workflow generation and publishing
 tests/             correctness and failure-boundary tests
 powerbi/           report construction guide and DAX measures
 tutorial/          public teaching and voiceover material
+docs/diagrams/     editable draw.io architecture, SVG previews and credited logos
 ```
 
 ## Important scope choices

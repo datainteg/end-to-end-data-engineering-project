@@ -41,3 +41,7 @@ The source tests used an isolated Compose project on ports 15432/27027 so an exi
 AWS deployment, actual Glue JDBC/MongoDB reads, Glue runtime compatibility, PySpark execution, Lambda integration, Snowflake COPY/publication, Airflow runtime import/terminal propagation, SNS delivery, Power BI report reconciliation, audio recording and final video export. The full target acceptance matrix in TEST_PLAN.md remains integration work; local analogues do not satisfy cloud evidence requirements.
 
 Reproduce the checked path with `docs/GETTING_STARTED.md`; use `docs/CLOUD_SETUP.md` for the next integration stage.
+
+## Interview and architecture documentation update
+
+Added 45 numbered project questions, 12 scenario answers and a practice plan. Generated four editable draw.io pages and matching SVG previews from one standard-library layout script. Checked XML IDs/parent/edge references, local documentation links, the 16 vendored icon hashes, and label widths against the preview font. Rendered and visually reviewed all four SVG previews. The draw.io XML was structurally validated; interactive import/export in the draw.io application was not executed. No pipeline behavior changed in this documentation update.

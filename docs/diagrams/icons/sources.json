@@ -1,0 +1,82 @@
+[
+  {
+    "file": "postgresql.svg",
+    "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/postgresql/postgresql-original.svg",
+    "sha256": "f220a436258ed014c512ba4f9c0de6b9e5c2c4b55331a0a29f8c7a1a12c36443"
+  },
+  {
+    "file": "mongodb.svg",
+    "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/mongodb/mongodb-original.svg",
+    "sha256": "d9f2bf7041264f4747e9969fb82ede0199c0ac97dfa8632aa0687d702ec05f7b"
+  },
+  {
+    "file": "apacheairflow.svg",
+    "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/apacheairflow/apacheairflow-original.svg",
+    "sha256": "0c83b226d54e77eda3336a4a7138a8ba61d82b5a8fee2bc026c135a239ec1814"
+  },
+  {
+    "file": "apachespark.svg",
+    "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/apachespark/apachespark-original.svg",
+    "sha256": "c9eea5d3f0bc25067fa5d2f8ec6c40226854ae85b7658e3d9cf07a15f702cc9a"
+  },
+  {
+    "file": "python.svg",
+    "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/python/python-original.svg",
+    "sha256": "71493b4a732f0532b3a03a7a95da3ee11a65766367c8303b901ffbe7bf91a3a2"
+  },
+  {
+    "file": "sqlite.svg",
+    "url": "https://raw.githubusercontent.com/devicons/devicon/7330accdbc47e2dc0c19789a48533c4a3c50fe58/icons/sqlite/sqlite-original.svg",
+    "sha256": "2b91c30887d3602479ba845cc012ef6ae577fba71eb96705a05b12e35d2c5e7e"
+  },
+  {
+    "file": "powerbi.svg",
+    "url": "https://raw.githubusercontent.com/microsoft/PowerBI-Icons/24f1db8bdfab951c25db591772140d2f4ec5bc1e/SVG/Power-BI.svg",
+    "sha256": "55daee85ccbe0d410909cd3b2b2d974d9a450ca3c6208992eec99fa9fa7b0b8d"
+  },
+  {
+    "file": "snowflake.png",
+    "url": "https://raw.githubusercontent.com/mingrammer/diagrams/9df75e65c03bf9f3da8c0ddbacc33d4ecf5e31e8/resources/saas/analytics/snowflake.png",
+    "sha256": "3f7067297e2a27824def5d9e76779e9ebc7f1b1e1e7dbd30cb9fbcd1d74b6dbd"
+  },
+  {
+    "file": "glue.svg",
+    "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+    "sha256": "ca70fd98e901b5f1862d1e3183f45fff8ea37003e7ec39358c2d65544a729fbc"
+  },
+  {
+    "file": "s3.svg",
+    "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+    "sha256": "b92c5101cc6565dd12df37655802279f8fba0c719279f62f93106d26750b36c6"
+  },
+  {
+    "file": "lambda.svg",
+    "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+    "sha256": "5818c80cd8e7d08891a2492c7694f472ca914fb3a99d9ef8e597db0b37ad7f13"
+  },
+  {
+    "file": "stepfunctions.svg",
+    "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+    "sha256": "19da6b2ef57df3a441b122b33def713b9715e95f74b5033d98e81629babe7ba5"
+  },
+  {
+    "file": "dynamodb.svg",
+    "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+    "sha256": "ed169f049cc24c954cfbe3d14695d5b022558c45e5605936a565d1347c14b664"
+  },
+  {
+    "file": "secrets.svg",
+    "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+    "sha256": "c3941b75fe0ad1181696c1dbbd5f9d1fe4561879e195b1e68bb6dc35a99da6b3"
+  },
+  {
+    "file": "cloudwatch.svg",
+    "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+    "sha256": "a84b5b88172ab39170eaa6154345332d755758a37cda6a5580981cf679e01c0b"
+  },
+  {
+    "file": "sns.svg",
+    "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+    "sha256": "f0781cd57174dd2ddfe2d2033566c73f5c0bf8192610eec5194e7a7756187dfe"
+  }
+]
